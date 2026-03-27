@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New Meal"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:layout_marginBottom="32dp" />
+
+        <EditText
+            android:id="@+id/etMealName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Meal Name (e.g. Chicken Salad)"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/etCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Calories (kcal)"
+            android:inputType="number"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/etProtein"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Protein (g)"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/etCarbs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Carbs (g)"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/etFats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fats (g)"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="32dp" />
+
+        <Button
+            android:id="@+id/btnSaveMeal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Save Meal"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:backgroundTint="#4CAF50" />
+
+    </LinearLayout>
+</ScrollView>
