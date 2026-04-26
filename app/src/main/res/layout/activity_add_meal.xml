@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add New Meal"
-            android:textSize="28sp"
+            android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="#2E7D32"
             android:layout_marginBottom="32dp" />
@@ -23,9 +23,12 @@
             android:id="@+id/etMealName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Meal Name (e.g. Chicken Salad)"
+            android:hint="Meal Name"
             android:inputType="text"
-            android:layout_marginBottom="16dp" />
+            android:minHeight="56dp"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:background="@android:drawable/edit_text" />
 
         <EditText
             android:id="@+id/etCalories"
@@ -33,7 +36,10 @@
             android:layout_height="wrap_content"
             android:hint="Calories (kcal)"
             android:inputType="number"
-            android:layout_marginBottom="16dp" />
+            android:minHeight="56dp"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:background="@android:drawable/edit_text" />
 
         <EditText
             android:id="@+id/etProtein"
@@ -41,7 +47,10 @@
             android:layout_height="wrap_content"
             android:hint="Protein (g)"
             android:inputType="numberDecimal"
-            android:layout_marginBottom="16dp" />
+            android:minHeight="56dp"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:background="@android:drawable/edit_text" />
 
         <EditText
             android:id="@+id/etCarbs"
@@ -49,7 +58,10 @@
             android:layout_height="wrap_content"
             android:hint="Carbs (g)"
             android:inputType="numberDecimal"
-            android:layout_marginBottom="16dp" />
+            android:minHeight="56dp"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:background="@android:drawable/edit_text" />
 
         <EditText
             android:id="@+id/etFats"
@@ -57,16 +69,56 @@
             android:layout_height="wrap_content"
             android:hint="Fats (g)"
             android:inputType="numberDecimal"
-            android:layout_marginBottom="32dp" />
+            android:minHeight="56dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:background="@android:drawable/edit_text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Day of the Week"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#616161"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinnerDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="56dp"
+            android:entries="@array/days_array"
+            android:layout_marginBottom="24dp"
+            android:background="@android:drawable/btn_dropdown" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meal Type"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#616161"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinnerMealType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="56dp"
+            android:entries="@array/meal_types_array"
+            android:layout_marginBottom="40dp"
+            android:background="@android:drawable/btn_dropdown" />
 
         <Button
             android:id="@+id/btnSaveMeal"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="64dp"
             android:text="Save Meal"
             android:textAllCaps="false"
             android:textSize="18sp"
-            android:backgroundTint="#4CAF50" />
+            android:backgroundTint="#4CAF50"
+            android:layout_marginBottom="24dp" />
 
     </LinearLayout>
 </ScrollView>

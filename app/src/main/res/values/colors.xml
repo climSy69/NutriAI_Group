@@ -2,4 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Premium UI Colors -->
+    <color name="primary_green">#2E7D32</color>
+    <color name="primary_dark">#1B5E20</color>
+    <color name="accent_light">#C8E6C9</color>
+
+    <!-- Theme Specific Surface Colors -->
+    <color name="background_light">#F8F9FA</color>
+    <color name="background_dark">#121212</color>
+    <color name="surface_dark">#1E1E1E</color>
+
+    <color name="text_primary_light">#212121</color>
+    <color name="text_primary_dark">#E0E0E0</color>
 </resources>

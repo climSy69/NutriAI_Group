@@ -3,7 +3,6 @@ package com.example.advancedcomputersciencecn6008_1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,27 +13,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize buttons
+        // Initialize UI components
         Button btnAddMeal = findViewById(R.id.btnAddMeal);
         Button btnViewSummary = findViewById(R.id.btnViewSummary);
-        Button btnAIAssistant = findViewById(R.id.btnAIAssistant);
-        Button btnProfile = findViewById(R.id.btnProfile);
+        Button btnWeekDiet = findViewById(R.id.btnWeekDiet);
+        Button btnLogout = findViewById(R.id.btnLogout);
 
-        // Update: Now opening AddMealActivity
-        btnAddMeal.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AddMealActivity.class);
+        // Navigation Logic
+        btnAddMeal.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AddMealActivity.class)));
+        btnViewSummary.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DailySummaryActivity.class)));
+        btnWeekDiet.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, WeekDietActivity.class)));
+
+        btnLogout.setOnClickListener(v -> {
+            UserSession.getInstance(MainActivity.this).clearSession();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
         });
-
-        btnViewSummary.setOnClickListener(v -> 
-            Toast.makeText(MainActivity.this, "Daily Summary Clicked", Toast.LENGTH_SHORT).show());
-
-        btnAIAssistant.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AIAssistantActivity.class);
-            startActivity(intent);
-        });
-
-        btnProfile.setOnClickListener(v -> 
-            Toast.makeText(MainActivity.this, "Profile Clicked", Toast.LENGTH_SHORT).show());
     }
 }

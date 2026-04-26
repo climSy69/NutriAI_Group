@@ -7,22 +7,28 @@
     android:gravity="center"
     android:background="#F8F9FA">
 
-    <!-- App Title -->
     <TextView
         android:id="@+id/tvAppTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="NutriAI"
-        android:textSize="36sp"
+        android:textSize="44sp"
         android:textStyle="bold"
         android:textColor="#2E7D32"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dashboard"
+        android:textSize="20sp"
+        android:textColor="#616161"
         android:layout_marginBottom="48dp" />
 
-    <!-- Dashboard Buttons -->
     <Button
         android:id="@+id/btnAddMeal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="64dp"
         android:text="Add Meal"
         android:textAllCaps="false"
         android:textSize="18sp"
@@ -30,33 +36,32 @@
         android:backgroundTint="#4CAF50" />
 
     <Button
-        android:id="@+id/btnViewSummary"
+        android:id="@+id/btnWeekDiet"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="View Daily Summary"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#2196F3" />
-
-    <Button
-        android:id="@+id/btnAIAssistant"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="AI Assistant"
+        android:layout_height="64dp"
+        android:text="Week Diet"
         android:textAllCaps="false"
         android:textSize="18sp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#9C27B0" />
 
     <Button
-        android:id="@+id/btnProfile"
+        android:id="@+id/btnViewSummary"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Profile"
+        android:layout_height="64dp"
+        android:text="Daily Summary"
         android:textAllCaps="false"
         android:textSize="18sp"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="#FF9800" />
+        android:backgroundTint="#2196F3" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="Logout"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:backgroundTint="#D32F2F" />
 
 </LinearLayout>

@@ -38,8 +38,18 @@
             android:exported="false" />
 
         <activity
+            android:name=".WeekDietActivity"
+            android:label="Week Diet"
+            android:exported="false" />
+
+        <activity
             android:name=".AIAssistantActivity"
             android:label="AI Wellness Assistant"
+            android:exported="false" />
+
+        <activity
+            android:name=".DailySummaryActivity"
+            android:label="Daily Summary"
             android:exported="false" />
 
     </application>

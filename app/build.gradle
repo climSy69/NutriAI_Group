@@ -38,7 +38,10 @@ dependencies {
     implementation libs.retrofit
     implementation libs.retrofit.gson
     implementation libs.okhttp.logging
+
+    // Gemini AI Support
     implementation libs.generativeai
+    implementation libs.guava
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
