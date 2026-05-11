@@ -58,6 +58,11 @@
             android:label="Daily Summary"
             android:exported="false" />
 
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Profile"
+            android:exported="false" />
+
     </application>
 
 </manifest>

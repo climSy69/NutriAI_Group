@@ -98,10 +98,15 @@ public class LoginActivity extends AppCompatActivity {
                     
                     String accessToken = authData.getAccessToken();
                     String userId = authData.getUserId();
+                    
+                    // Extract email from AuthResponse
+                    String userEmail = (authData.user != null) ? authData.user.email :
+                                       (authData.session != null && authData.session.user != null) ?
+                                       authData.session.user.email : null;
 
                     if (accessToken != null && userId != null) {
-                        // Save session
-                        UserSession.getInstance(LoginActivity.this).setSession(userId, accessToken);
+                        // Save session including email
+                        UserSession.getInstance(LoginActivity.this).setSession(userId, accessToken, userEmail);
                         
                         Log.d(TAG, "onResponse: Session saved. Navigating to MainActivity.");
                         

@@ -17,12 +17,14 @@ public class MainActivity extends AppCompatActivity {
         Button btnAddMeal = findViewById(R.id.btnAddMeal);
         Button btnViewSummary = findViewById(R.id.btnViewSummary);
         Button btnWeekDiet = findViewById(R.id.btnWeekDiet);
+        Button btnProfile = findViewById(R.id.btnProfile);
         Button btnLogout = findViewById(R.id.btnLogout);
 
         // Navigation Logic
         btnAddMeal.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, AddMealActivity.class)));
         btnViewSummary.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DailySummaryActivity.class)));
         btnWeekDiet.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, WeekDietActivity.class)));
+        btnProfile.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
 
         btnLogout.setOnClickListener(v -> {
             UserSession.getInstance(MainActivity.this).clearSession();

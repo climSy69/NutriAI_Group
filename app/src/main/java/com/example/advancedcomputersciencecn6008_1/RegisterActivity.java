@@ -1,5 +1,6 @@
 package com.example.advancedcomputersciencecn6008_1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -86,9 +87,22 @@ public class RegisterActivity extends AppCompatActivity {
                     
                     // Extract user ID using the helper method in AuthResponse
                     String userId = authData.getUserId();
+                    String accessToken = authData.getAccessToken();
+
+                    // Extract email from AuthResponse
+                    String userEmail = (authData.user != null) ? authData.user.email :
+                                       (authData.session != null && authData.session.user != null) ?
+                                       authData.session.user.email : null;
 
                     if (userId != null) {
                         Log.d(TAG, "SignUp Successful. Creating profile for User ID: " + userId);
+                        
+                        // If we got a session immediately (Supabase can be configured this way), save it.
+                        // Otherwise the user still needs to log in.
+                        if (accessToken != null) {
+                            UserSession.getInstance(RegisterActivity.this).setSession(userId, accessToken, userEmail);
+                        }
+
                         createProfile(userId, fullName, email);
                     } else {
                         Log.e(TAG, "SignUp successful but no user ID found in response.");
@@ -128,7 +142,14 @@ public class RegisterActivity extends AppCompatActivity {
                 if (response.isSuccessful() || response.code() == 201 || response.code() == 204) {
                     Log.d(TAG, "Profile created successfully.");
                     runOnUiThread(() -> {
-                        Toast.makeText(RegisterActivity.this, "Registration Successful! Please Login.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_LONG).show();
+                        
+                        // Check if session was saved during signUp
+                        if (UserSession.getInstance().isLoggedIn()) {
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
                         finish();
                     });
                 } else {

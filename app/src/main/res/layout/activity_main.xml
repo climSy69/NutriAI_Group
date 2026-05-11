@@ -78,6 +78,14 @@
         </com.google.android.material.card.MaterialCardView>
 
         <Button
+            android:id="@+id/btnProfile"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Profile"
+            android:layout_marginBottom="@dimen/spacing_normal" />
+
+        <Button
             android:id="@+id/btnLogout"
             style="@style/Widget.Material3.Button.ElevatedButton"
             android:layout_width="wrap_content"
