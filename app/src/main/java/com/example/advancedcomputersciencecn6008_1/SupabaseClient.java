@@ -1,9 +1,15 @@
 package com.example.advancedcomputersciencecn6008_1;
 
+import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
-
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -15,13 +21,13 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public class SupabaseClient {
+    private static final String TAG = "SUPABASE_CLIENT";
     private static Retrofit retrofit = null;
 
     // --- DATA MODELS ---
-
     public static class AuthRequest {
-        String email;
-        String password;
+        @SerializedName("email") public String email;
+        @SerializedName("password") public String password;
 
         public AuthRequest(String email, String password) {
             this.email = email;
@@ -30,33 +36,48 @@ public class SupabaseClient {
     }
 
     public static class AuthResponse {
-        @SerializedName("access_token")
-        public String accessToken;
-        public Session session;
-        public User user;
-        
+        @Nullable @SerializedName("access_token") public String accessToken;
+        @Nullable @SerializedName("token_type") public String tokenType;
+        @Nullable @SerializedName("expires_in") public Long expiresIn;
+        @Nullable @SerializedName("refresh_token") public String refreshToken;
+        @Nullable @SerializedName("user") public User user;
+        @Nullable @SerializedName("session") public Session session;
+
         public static class Session {
-            @SerializedName("access_token")
-            public String accessToken;
+            @Nullable @SerializedName("access_token") public String accessToken;
+            @Nullable @SerializedName("user") public User user;
         }
 
         public static class User {
-            public String id; 
-            public String email;
+            @Nullable @SerializedName("id") public String id; 
+            @Nullable @SerializedName("email") public String email;
         }
 
+        @Nullable
         public String getAccessToken() {
             if (accessToken != null) return accessToken;
             if (session != null) return session.accessToken;
             return null;
         }
+
+        @Nullable
+        public String getUserId() {
+            if (user != null) return user.id;
+            if (session != null && session.user != null) return session.user.id;
+            return null;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return "AuthResponse{hasToken=" + (getAccessToken() != null) + ", userId=" + getUserId() + "}";
+        }
     }
 
     public static class Profile {
-        public String id;
-        @SerializedName("full_name")
-        public String fullName;
-        public String email;
+        @SerializedName("id") public String id;
+        @SerializedName("full_name") public String fullName;
+        @SerializedName("email") public String email;
 
         public Profile(String id, String fullName, String email) {
             this.id = id;
@@ -66,17 +87,16 @@ public class SupabaseClient {
     }
 
     public static class Meal {
-        @SerializedName("user_id")
-        public String userId;
-        @SerializedName("meal_name")
-        public String mealName;
-        public int calories;
-        public int protein;
-        public int carbs;
-        public int fats;
-        public String day;
-        @SerializedName("meal_type")
-        public String mealType;
+        @SerializedName("id") public String id;
+        @SerializedName("user_id") public String userId;
+        @SerializedName("meal_name") public String mealName; 
+        @SerializedName("calories") public int calories;
+        @SerializedName("protein") public int protein;
+        @SerializedName("carbs") public int carbs;
+        @SerializedName("fats") public int fats;
+        @SerializedName("day") public String day;
+        @SerializedName("meal_type") public String mealType;
+        @SerializedName("created_at") public String createdAt;
 
         public Meal(String userId, String mealName, int calories, int protein, int carbs, int fats, String day, String mealType) {
             this.userId = userId;
@@ -91,13 +111,13 @@ public class SupabaseClient {
     }
 
     // --- API INTERFACES ---
-
     public interface AuthService {
-        @POST("auth/v1/signup")
-        Call<AuthResponse> signUp(@Body AuthRequest request);
-
+        // Corrected to use typed AuthResponse for both calls
         @POST("auth/v1/token?grant_type=password")
         Call<AuthResponse> signIn(@Body AuthRequest request);
+
+        @POST("auth/v1/signup")
+        Call<AuthResponse> signUp(@Body AuthRequest request);
     }
 
     public interface DatabaseService {
@@ -121,34 +141,61 @@ public class SupabaseClient {
     }
 
     // --- RETROFIT CLIENT ---
-
-    public static Retrofit getClient() {
+    public static synchronized Retrofit getClient() {
         if (retrofit == null) {
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            Log.d(TAG, "getClient: Initializing Retrofit with mandatory Supabase headers...");
 
-            OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .addInterceptor(chain -> {
+            String baseUrl = SupabaseConfig.SUPABASE_URL;
+            if (baseUrl == null || baseUrl.trim().isEmpty()) {
+                Log.e(TAG, "CRITICAL ERROR: SUPABASE_URL is null or empty!");
+                baseUrl = "https://invalid.url/";
+            }
+
+            // 1. Interceptor for mandatory Supabase headers
+            Interceptor headerInterceptor = new Interceptor() {
+                @NonNull
+                @Override
+                public Response intercept(@NonNull Chain chain) throws IOException {
                     Request original = chain.request();
-                    Request.Builder builder = original.newBuilder()
-                        .addHeader("apikey", SupabaseConfig.SUPABASE_ANON_KEY)
-                        .addHeader("Content-Type", "application/json")
-                        .addHeader("Prefer", "return=minimal");
+                    Request.Builder builder = original.newBuilder();
+                    
+                    // Supabase requires 'apikey' and 'Content-Type' for all requests
+                    builder.header("apikey", SupabaseConfig.SUPABASE_ANON_KEY);
+                    builder.header("Content-Type", "application/json");
 
+                    // Add default Bearer token if none provided (e.g. for Auth or public REST)
                     if (original.header("Authorization") == null) {
-                        builder.addHeader("Authorization", "Bearer " + SupabaseConfig.SUPABASE_ANON_KEY);
+                        builder.header("Authorization", "Bearer " + SupabaseConfig.SUPABASE_ANON_KEY);
                     }
 
                     return chain.proceed(builder.build());
-                })
+                }
+            };
+
+            // 2. Logging Interceptor
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor(message -> Log.d("OKHTTP_LOG", message));
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            // 3. OkHttpClient
+            OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(headerInterceptor)
+                .addInterceptor(logging)
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
                 .build();
 
-            retrofit = new Retrofit.Builder()
-                .baseUrl(SupabaseConfig.SUPABASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
+            try {
+                retrofit = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(GsonConverterFactory.create()) // GSON Factory ensured
+                    .client(client)
+                    .build();
+                Log.d(TAG, "getClient: Retrofit initialized successfully.");
+            } catch (Exception e) {
+                Log.e(TAG, "getClient: Failed to build Retrofit", e);
+            }
         }
         return retrofit;
     }

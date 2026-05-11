@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,14 +48,12 @@ public class LoginActivity extends AppCompatActivity {
 
         if (btnLogin == null) {
             Log.e(TAG, "CRITICAL ERROR: btnLogin is NULL. Check layout IDs.");
-        } else {
-            Log.d(TAG, "btnLogin successfully initialized");
         }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "Login button physically pressed");
+                Log.d(TAG, "Login button pressed");
                 loginUser();
             }
         });
@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "Register link pressed");
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
@@ -70,8 +69,6 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUser() {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-
-        Log.d(TAG, "loginUser() triggered with email: " + email);
 
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("Email is required");
@@ -85,8 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // --- SIGN IN WITH SUPABASE ---
-        Log.d(TAG, "Initiating Supabase Auth request...");
+        Log.d(TAG, "loginUser: Attempting login for: " + email);
 
         SupabaseClient.AuthRequest authRequest = new SupabaseClient.AuthRequest(email, password);
         SupabaseClient.AuthService authService = SupabaseClient.getClient().create(SupabaseClient.AuthService.class);
@@ -94,29 +90,50 @@ public class LoginActivity extends AppCompatActivity {
         authService.signIn(authRequest).enqueue(new Callback<SupabaseClient.AuthResponse>() {
             @Override
             public void onResponse(Call<SupabaseClient.AuthResponse> call, Response<SupabaseClient.AuthResponse> response) {
-                Log.d(TAG, "Supabase Response Code: " + response.code());
+                Log.d(TAG, "onResponse: Received code " + response.code());
+                
                 if (response.isSuccessful() && response.body() != null) {
-                    // Store Session Data
-                    SupabaseClient.AuthResponse auth = response.body();
-                    UserSession.getInstance().setSession(auth.user.id, auth.getAccessToken());
+                    SupabaseClient.AuthResponse authData = response.body();
+                    Log.d(TAG, "onResponse: Success. Response body: " + authData.toString());
                     
-                    Log.d(TAG, "Login successful, User ID: " + auth.user.id);
-                    Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                    
-                    // Navigate to MainActivity
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    String accessToken = authData.getAccessToken();
+                    String userId = authData.getUserId();
+
+                    if (accessToken != null && userId != null) {
+                        // Save session
+                        UserSession.getInstance(LoginActivity.this).setSession(userId, accessToken);
+                        
+                        Log.d(TAG, "onResponse: Session saved. Navigating to MainActivity.");
+                        
+                        runOnUiThread(() -> {
+                            Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                        });
+                    } else {
+                        Log.e(TAG, "onResponse: Login successful but missing User ID or Token. User: " + userId + ", Token: " + (accessToken != null));
+                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Login failed: Incomplete user data from server", Toast.LENGTH_SHORT).show());
+                    }
                 } else {
-                    Log.e(TAG, "Login failed. HTTP Status: " + response.code());
-                    Toast.makeText(LoginActivity.this, "Login failed: Invalid credentials", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "onResponse: Login failed. Code: " + response.code());
+                    try {
+                        if (response.errorBody() != null) {
+                            String errorStr = response.errorBody().string();
+                            Log.e(TAG, "Error Body: " + errorStr);
+                        }
+                    } catch (IOException e) {
+                        Log.e(TAG, "Error reading error body", e);
+                    }
+                    runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Login failed: Invalid credentials or account issues", Toast.LENGTH_SHORT).show());
                 }
             }
 
             @Override
             public void onFailure(Call<SupabaseClient.AuthResponse> call, Throwable t) {
-                Log.e(TAG, "Network Failure: " + t.getMessage());
-                Toast.makeText(LoginActivity.this, "Network error during login", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onFailure: Network error during login: " + t.getMessage(), t);
+                runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
     }

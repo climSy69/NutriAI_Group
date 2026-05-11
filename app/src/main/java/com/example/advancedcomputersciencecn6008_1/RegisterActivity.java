@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private static final String TAG = "SUPABASE_DEBUG";
+    private static final String TAG = "REGISTER_DEBUG";
     private EditText etFullName, etEmail, etPassword, etConfirmPassword;
     private Button btnRegister;
     private TextView tvBackToLogin;
@@ -59,134 +59,90 @@ public class RegisterActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        // Validation logic
-        if (TextUtils.isEmpty(fullName)) {
-            etFullName.setError("Full Name is required");
-            etFullName.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(email)) {
-            etEmail.setError("Email is required");
-            etEmail.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Password is required");
-            etPassword.requestFocus();
-            return;
-        }
-
-        if (password.length() < 6) {
-            etPassword.setError("Password must be at least 6 characters");
-            etPassword.requestFocus();
+        if (TextUtils.isEmpty(fullName) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Passwords do not match");
-            etConfirmPassword.requestFocus();
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Log.d(TAG, "Starting registration for email: " + email);
+        Log.d(TAG, "registerUser: Initiating request for " + email);
 
-        // --- STEP 1: SIGN UP WITH SUPABASE AUTH ---
-        
         SupabaseClient.AuthRequest authRequest = new SupabaseClient.AuthRequest(email, password);
         SupabaseClient.AuthService authService = SupabaseClient.getClient().create(SupabaseClient.AuthService.class);
 
+        // Consistent usage of Call<AuthResponse> and Callback<AuthResponse>
         authService.signUp(authRequest).enqueue(new Callback<SupabaseClient.AuthResponse>() {
             @Override
             public void onResponse(Call<SupabaseClient.AuthResponse> call, Response<SupabaseClient.AuthResponse> response) {
-                Log.d(TAG, "SignUp HTTP Status: " + response.code());
+                Log.d(TAG, "onResponse: SignUp Code " + response.code());
                 
                 if (response.isSuccessful() && response.body() != null) {
                     SupabaseClient.AuthResponse authData = response.body();
+                    Log.d(TAG, "onResponse: Success. Response details: " + authData.toString());
                     
-                    // Supabase always returns a user object on successful signup
-                    if (authData.user != null) {
-                        String userId = authData.user.id;
-                        String accessToken = authData.getAccessToken(); // Use robust helper
-                        
-                        Log.d(TAG, "SignUp Successful. User ID: " + userId + " | Token available: " + (accessToken != null));
-                        
-                        // If accessToken is null, email confirmation is likely required
-                        if (accessToken == null) {
-                            Log.d(TAG, "Access token is null. Email confirmation may be required.");
-                            Toast.makeText(RegisterActivity.this, "Signup successful! Please check your email for confirmation.", Toast.LENGTH_LONG).show();
-                            // We still attempt profile creation with the anon key as fallback (if RLS allows)
-                        }
+                    // Extract user ID using the helper method in AuthResponse
+                    String userId = authData.getUserId();
 
-                        // --- STEP 2: CREATE PROFILE IN DATABASE ---
-                        createProfile(userId, fullName, email, accessToken);
+                    if (userId != null) {
+                        Log.d(TAG, "SignUp Successful. Creating profile for User ID: " + userId);
+                        createProfile(userId, fullName, email);
                     } else {
-                        Log.e(TAG, "SignUp Successful but User object is missing in response body.");
-                        Toast.makeText(RegisterActivity.this, "Internal Error: User data missing.", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "SignUp successful but no user ID found in response.");
+                        runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Signup successful! Please check your email.", Toast.LENGTH_LONG).show());
+                        finish();
                     }
                 } else {
-                    String errorMsg = extractError(response);
-                    Log.e(TAG, "SignUp Error (" + response.code() + "): " + errorMsg);
-                    Toast.makeText(RegisterActivity.this, "Registration Failed: " + errorMsg, Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "onResponse: SignUp failed. Code: " + response.code());
+                    try {
+                        if (response.errorBody() != null) {
+                            String errorStr = response.errorBody().string();
+                            Log.e(TAG, "Error Body: " + errorStr);
+                        }
+                    } catch (IOException e) {
+                        Log.e(TAG, "Error reading error body", e);
+                    }
+                    runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Registration failed: " + response.code(), Toast.LENGTH_SHORT).show());
                 }
             }
 
             @Override
             public void onFailure(Call<SupabaseClient.AuthResponse> call, Throwable t) {
-                Log.e(TAG, "SignUp Network Failure: " + t.getMessage());
-                Toast.makeText(RegisterActivity.this, "Network Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "onFailure: Network error: " + t.getMessage(), t);
+                runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
     }
 
-    private void createProfile(String userId, String fullName, String email, String accessToken) {
+    private void createProfile(String userId, String fullName, String email) {
         SupabaseClient.Profile profile = new SupabaseClient.Profile(userId, fullName, email);
         SupabaseClient.DatabaseService databaseService = SupabaseClient.getClient().create(SupabaseClient.DatabaseService.class);
 
-        // If accessToken is null (email confirmation required), we send null. 
-        // SupabaseClient interceptor will then use the anon key.
-        String authToken = (accessToken != null) ? "Bearer " + accessToken : null;
-        
-        Log.d(TAG, "Inserting Profile: ID=" + userId + ", Name=" + fullName + ", Email=" + email + " | Using Token: " + (authToken != null));
-
-        databaseService.createProfile(authToken, profile).enqueue(new Callback<Void>() {
+        // passing null for token triggers the interceptor to use the anon key
+        databaseService.createProfile(null, profile).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d(TAG, "Profile Creation Status: " + response.code());
-                
                 if (response.isSuccessful() || response.code() == 201 || response.code() == 204) {
                     Log.d(TAG, "Profile created successfully.");
-                    
-                    // Store Session Data for subsequent use
-                    UserSession.getInstance().setSession(userId, accessToken);
-                    
-                    Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_LONG).show();
-                    finish();
+                    runOnUiThread(() -> {
+                        Toast.makeText(RegisterActivity.this, "Registration Successful! Please Login.", Toast.LENGTH_LONG).show();
+                        finish();
+                    });
                 } else {
-                    String errorMsg = extractError(response);
-                    Log.e(TAG, "Profile Creation Error (" + response.code() + "): " + errorMsg);
-                    Toast.makeText(RegisterActivity.this, "Registration partial success. Profile error (" + response.code() + ").", Toast.LENGTH_LONG).show();
-                    // Don't finish(), let user see the error
+                    Log.e(TAG, "Profile creation failed: " + response.code());
+                    runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "Account created, but profile setup failed.", Toast.LENGTH_LONG).show());
+                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.e(TAG, "Profile Creation Network Failure: " + t.getMessage());
-                Toast.makeText(RegisterActivity.this, "Profile creation network error.", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Profile creation network error: " + t.getMessage());
+                runOnUiThread(() -> finish());
             }
         });
-    }
-
-    private String extractError(Response<?> response) {
-        try {
-            if (response.errorBody() != null) {
-                return response.errorBody().string();
-            }
-        } catch (IOException e) {
-            return "Could not parse server error.";
-        }
-        return response.message();
     }
 }

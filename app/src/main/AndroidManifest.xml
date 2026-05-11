@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ADVANCEDCOMPUTERSCIENCECN6008_1">
+        android:theme="@style/Theme.ADVANCEDCOMPUTERSCIENCECN6008_1"
+        android:usesCleartextTraffic="true">
 
         <!-- SplashActivity is now the first screen (Launcher) -->
         <activity
