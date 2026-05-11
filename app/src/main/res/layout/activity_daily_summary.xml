@@ -1,88 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center_horizontal"
-    android:background="#F8F9FA">
+    android:fillViewport="true"
+    android:background="@color/background_light">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Daily Summary"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="#2E7D32"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="32dp" />
-
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:elevation="4dp">
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_medium"
+        android:gravity="center_horizontal">
 
-        <LinearLayout
+        <TextView
+            style="@style/TextAppearance.NutriAI.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Summary"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_large" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.NutriAI.Card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            app:cardBackgroundColor="@color/surface_white"
+            android:layout_marginBottom="@dimen/spacing_medium">
 
-            <TextView
-                android:id="@+id/tvTotalCalories"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total Calories: 0 kcal"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_medium">
 
-            <TextView
-                android:id="@+id/tvTotalProtein"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Protein: 0g"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                <TextView
+                    android:id="@+id/tvTotalCalories"
+                    style="@style/TextAppearance.NutriAI.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Calories: 0 kcal"
+                    android:textColor="@color/primary_green"
+                    android:layout_marginBottom="@dimen/spacing_medium" />
 
-            <TextView
-                android:id="@+id/tvTotalCarbs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Carbs: 0g"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/border_gray"
+                    android:layout_marginBottom="@dimen/spacing_medium" />
 
-            <TextView
-                android:id="@+id/tvTotalFats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Fats: 0g"
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tvTotalProtein"
+                    style="@style/TextAppearance.NutriAI.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Protein: 0g"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="@dimen/spacing_small" />
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/tvTotalCarbs"
+                    style="@style/TextAppearance.NutriAI.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Carbs: 0g"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="@dimen/spacing_small" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+                <TextView
+                    android:id="@+id/tvTotalFats"
+                    style="@style/TextAppearance.NutriAI.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Fats: 0g"
+                    android:textColor="@color/text_primary" />
 
-    <TextView
-        android:id="@+id/tvNoMeals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No meals recorded for today."
-        android:visibility="gone"
-        android:layout_marginTop="16dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back to Dashboard"
-        android:layout_marginTop="32dp" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:visibility="gone" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvNoMeals"
+            style="@style/TextAppearance.NutriAI.Body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No meals recorded for today."
+            android:textColor="@color/text_secondary"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/spacing_medium" />
+
+        <Button
+            android:id="@+id/btnBack"
+            style="@style/Widget.NutriAI.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back to Dashboard"
+            android:layout_marginTop="@dimen/spacing_normal" />
+
+    </LinearLayout>
+</ScrollView>

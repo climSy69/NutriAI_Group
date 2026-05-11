@@ -3,16 +3,25 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Premium UI Colors -->
-    <color name="primary_green">#2E7D32</color>
-    <color name="primary_dark">#1B5E20</color>
-    <color name="accent_light">#C8E6C9</color>
+    <!-- Modern NutriAI Palette -->
+    <color name="primary_green">#4CAF50</color>
+    <color name="primary_dark">#388E3C</color>
+    <color name="primary_light">#C8E6C9</color>
 
-    <!-- Theme Specific Surface Colors -->
-    <color name="background_light">#F8F9FA</color>
-    <color name="background_dark">#121212</color>
-    <color name="surface_dark">#1E1E1E</color>
+    <color name="secondary_teal">#009688</color>
+    <color name="accent_orange">#FF9800</color>
 
-    <color name="text_primary_light">#212121</color>
-    <color name="text_primary_dark">#E0E0E0</color>
+    <!-- Neutral Colors -->
+    <color name="background_light">#F5F7F8</color>
+    <color name="surface_white">#FFFFFF</color>
+    <color name="border_gray">#E0E0E0</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#2C3E50</color>
+    <color name="text_secondary">#7F8C8D</color>
+    <color name="text_on_primary">#FFFFFF</color>
+
+    <!-- Status Colors -->
+    <color name="error_red">#E53935</color>
+    <color name="success_green">#43A047</color>
 </resources>

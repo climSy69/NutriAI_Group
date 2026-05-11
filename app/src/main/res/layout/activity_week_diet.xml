@@ -1,46 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:background="#F8F9FA">
+    android:padding="@dimen/spacing_medium"
+    android:background="@color/background_light">
 
     <TextView
         android:id="@+id/tvWeekDietTitle"
+        style="@style/TextAppearance.NutriAI.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Weekly Diet"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="#2E7D32"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="@dimen/spacing_small" />
 
     <TextView
+        style="@style/TextAppearance.NutriAI.Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Planned Meals for the Week"
-        android:textSize="18sp"
-        android:textColor="#616161"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="@dimen/spacing_medium" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/spacing_large"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/tvEmptyState"
+        style="@style/TextAppearance.NutriAI.Subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Your diet list is empty.\nStart by adding your first meal from the dashboard."
-        android:textSize="18sp"
-        android:textColor="#9E9E9E"
         android:gravity="center"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="@dimen/spacing_xlarge"
         android:visibility="gone" />
 
     <ScrollView
@@ -53,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="32dp" />
+            android:paddingBottom="@dimen/spacing_large" />
 
     </ScrollView>
 

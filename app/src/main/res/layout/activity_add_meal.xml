@@ -1,124 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="@color/background_light">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="@dimen/spacing_medium">
 
         <TextView
+            style="@style/TextAppearance.NutriAI.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add New Meal"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="#2E7D32"
-            android:layout_marginBottom="32dp" />
+            android:layout_marginBottom="@dimen/spacing_large" />
 
-        <EditText
-            android:id="@+id/etMealName"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Meal Name"
-            android:inputType="text"
-            android:minHeight="56dp"
-            android:layout_marginBottom="16dp"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text" />
+            android:layout_marginBottom="@dimen/spacing_normal"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-        <EditText
-            android:id="@+id/etCalories"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMealName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Meal Name"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Calories (kcal)"
-            android:inputType="number"
-            android:minHeight="56dp"
-            android:layout_marginBottom="16dp"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text" />
+            android:layout_marginBottom="@dimen/spacing_normal"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-        <EditText
-            android:id="@+id/etProtein"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCalories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Calories (kcal)"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Protein (g)"
-            android:inputType="numberDecimal"
-            android:minHeight="56dp"
-            android:layout_marginBottom="16dp"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text" />
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:layout_marginBottom="@dimen/spacing_normal">
 
-        <EditText
-            android:id="@+id/etCarbs"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_small"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etProtein"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Protein (g)"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCarbs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Carbs (g)"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Carbs (g)"
-            android:inputType="numberDecimal"
-            android:minHeight="56dp"
-            android:layout_marginBottom="16dp"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text" />
+            android:layout_marginBottom="@dimen/spacing_medium"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-        <EditText
-            android:id="@+id/etFats"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fats (g)"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fats (g)"
-            android:inputType="numberDecimal"
-            android:minHeight="56dp"
-            android:layout_marginBottom="24dp"
-            android:padding="12dp"
-            android:background="@android:drawable/edit_text" />
+            android:layout_marginBottom="@dimen/spacing_normal"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:hint="Day of the Week">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Day of the Week"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#616161"
-            android:layout_marginBottom="8dp" />
+            <AutoCompleteTextView
+                android:id="@+id/spinnerDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinnerDay"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="56dp"
-            android:entries="@array/days_array"
-            android:layout_marginBottom="24dp"
-            android:background="@android:drawable/btn_dropdown" />
+            android:layout_marginBottom="@dimen/spacing_xlarge"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:hint="Meal Type">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Meal Type"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#616161"
-            android:layout_marginBottom="8dp" />
-
-        <Spinner
-            android:id="@+id/spinnerMealType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="56dp"
-            android:entries="@array/meal_types_array"
-            android:layout_marginBottom="40dp"
-            android:background="@android:drawable/btn_dropdown" />
+            <AutoCompleteTextView
+                android:id="@+id/spinnerMealType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSaveMeal"
+            style="@style/Widget.NutriAI.Button"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:text="Save Meal"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            android:backgroundTint="#4CAF50"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="@dimen/spacing_large" />
 
     </LinearLayout>
 </ScrollView>
