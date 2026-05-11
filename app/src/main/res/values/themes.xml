@@ -17,19 +17,10 @@
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.NutriAI.LargeComponent</item>
     </style>
 
-    <style name="ShapeAppearance.NutriAI.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
-        <item name="cornerSize">8dp</item>
-    </style>
-
-    <style name="ShapeAppearance.NutriAI.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
-        <item name="cornerSize">@dimen/card_corner_radius</item>
-    </style>
-
-    <style name="ShapeAppearance.NutriAI.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
-        <item name="cornerSize">24dp</item>
-    </style>
-
     <style name="Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" parent="Base.Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" />
+
+    <!-- NoActionBar variant -->
+    <style name="Theme.ADVANCEDCOMPUTERSCIENCECN6008_1.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar" />
 
     <!-- Typography Styles -->
     <style name="TextAppearance.NutriAI.Title" parent="TextAppearance.Material3.HeadlineLarge">
