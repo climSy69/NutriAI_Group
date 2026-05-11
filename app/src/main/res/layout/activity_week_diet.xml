@@ -7,6 +7,14 @@
     android:padding="@dimen/spacing_medium"
     android:background="@color/background_light">
 
+    <Button
+        android:id="@+id/btnHome"
+        style="@style/Widget.NutriAI.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:layout_marginBottom="@dimen/spacing_medium" />
+
     <TextView
         android:id="@+id/tvWeekDietTitle"
         style="@style/TextAppearance.NutriAI.Title"

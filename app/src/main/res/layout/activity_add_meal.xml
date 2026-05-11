@@ -11,6 +11,14 @@
         android:orientation="vertical"
         android:padding="@dimen/spacing_medium">
 
+        <Button
+            android:id="@+id/btnHome"
+            style="@style/Widget.NutriAI.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:layout_marginBottom="@dimen/spacing_medium" />
+
         <TextView
             style="@style/TextAppearance.NutriAI.Title"
             android:layout_width="wrap_content"

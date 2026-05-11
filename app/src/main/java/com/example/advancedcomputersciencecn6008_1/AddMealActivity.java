@@ -1,5 +1,6 @@
 package com.example.advancedcomputersciencecn6008_1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,7 +24,7 @@ public class AddMealActivity extends AppCompatActivity {
     private static final String TAG = "SUPABASE_DEBUG";
     private EditText etMealName, etCalories, etProtein, etCarbs, etFats;
     private MaterialAutoCompleteTextView spinnerDay, spinnerMealType;
-    private Button btnSaveMeal;
+    private Button btnSaveMeal, btnHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +43,17 @@ public class AddMealActivity extends AppCompatActivity {
         spinnerMealType = findViewById(R.id.spinnerMealType);
         
         btnSaveMeal = findViewById(R.id.btnSaveMeal);
+        btnHome = findViewById(R.id.btnHome);
 
         setupDropdowns();
 
         btnSaveMeal.setOnClickListener(v -> saveMeal());
+
+        btnHome.setOnClickListener(v -> {
+            Intent intent = new Intent(AddMealActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
     }
 
     private void setupDropdowns() {

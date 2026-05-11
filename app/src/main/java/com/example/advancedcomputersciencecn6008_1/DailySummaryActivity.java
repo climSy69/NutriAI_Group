@@ -25,7 +25,7 @@ public class DailySummaryActivity extends AppCompatActivity {
     private static final String TAG = "DAILY_SUMMARY_DEBUG";
     private TextView tvTotalCalories, tvTotalProtein, tvTotalCarbs, tvTotalFats, tvNoMeals;
     private ProgressBar progressBar;
-    private Button btnBack;
+    private Button btnBack, btnHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,15 @@ public class DailySummaryActivity extends AppCompatActivity {
         tvNoMeals = findViewById(R.id.tvNoMeals);
         progressBar = findViewById(R.id.progressBar);
         btnBack = findViewById(R.id.btnBack);
+        btnHome = findViewById(R.id.btnHome);
 
         btnBack.setOnClickListener(v -> finish());
+        
+        btnHome.setOnClickListener(v -> {
+            Intent intent = new Intent(DailySummaryActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
 
         fetchTodaySummary();
     }

@@ -1,8 +1,10 @@
 package com.example.advancedcomputersciencecn6008_1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ public class WeekDietActivity extends AppCompatActivity {
     private LinearLayout containerMeals;
     private ProgressBar progressBar;
     private TextView tvEmptyState;
+    private Button btnHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,13 @@ public class WeekDietActivity extends AppCompatActivity {
         containerMeals = findViewById(R.id.containerMeals);
         progressBar = findViewById(R.id.progressBar);
         tvEmptyState = findViewById(R.id.tvEmptyState);
+        btnHome = findViewById(R.id.btnHome);
+
+        btnHome.setOnClickListener(v -> {
+            Intent intent = new Intent(WeekDietActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
 
         fetchMeals();
     }
