@@ -15,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -112,7 +113,6 @@ public class SupabaseClient {
 
     // --- API INTERFACES ---
     public interface AuthService {
-        // Corrected to use typed AuthResponse for both calls
         @POST("auth/v1/token?grant_type=password")
         Call<AuthResponse> signIn(@Body AuthRequest request);
 
@@ -138,6 +138,12 @@ public class SupabaseClient {
             @Header("Authorization") String token,
             @Query("user_id") String userIdFilter
         );
+
+        @DELETE("rest/v1/meals")
+        Call<Void> deleteMeal(
+            @Header("Authorization") String token,
+            @Query("id") String idFilter
+        );
     }
 
     // --- RETROFIT CLIENT ---
@@ -159,11 +165,9 @@ public class SupabaseClient {
                     Request original = chain.request();
                     Request.Builder builder = original.newBuilder();
                     
-                    // Supabase requires 'apikey' and 'Content-Type' for all requests
                     builder.header("apikey", SupabaseConfig.SUPABASE_ANON_KEY);
                     builder.header("Content-Type", "application/json");
 
-                    // Add default Bearer token if none provided (e.g. for Auth or public REST)
                     if (original.header("Authorization") == null) {
                         builder.header("Authorization", "Bearer " + SupabaseConfig.SUPABASE_ANON_KEY);
                     }
@@ -172,11 +176,9 @@ public class SupabaseClient {
                 }
             };
 
-            // 2. Logging Interceptor
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor(message -> Log.d("OKHTTP_LOG", message));
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-            // 3. OkHttpClient
             OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(headerInterceptor)
                 .addInterceptor(logging)
@@ -189,7 +191,7 @@ public class SupabaseClient {
             try {
                 retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create()) // GSON Factory ensured
+                    .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();
                 Log.d(TAG, "getClient: Retrofit initialized successfully.");
