@@ -23,7 +23,11 @@ public class ProfileActivity extends AppCompatActivity {
         if (session.isLoggedIn()) {
             String email = session.getEmail();
             tvEmail.setText(email != null ? email : "No email");
-            tvId.setText("ID: " + session.getUserId());
+            
+            String username = (email != null && email.contains("@"))
+                    ? email.substring(0, email.indexOf("@"))
+                    : "User";
+            tvId.setText("Username: " + username);
         }
 
         btnHome.setOnClickListener(v -> {
