@@ -2,12 +2,11 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary_green</item>
-        <item name="colorOnPrimary">@color/text_on_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryContainer">@color/primary_light</item>
+        <item name="colorSecondary">@color/primary_dark</item>
 
-        <item name="colorSecondary">@color/secondary_teal</item>
-
-        <item name="android:windowBackground">@color/background_light</item>
+        <item name="android:windowBackground">@drawable/bg_main_gradient</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
 
@@ -19,16 +18,13 @@
 
     <style name="Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" parent="Base.Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" />
 
-    <!-- NoActionBar variant -->
-    <style name="Theme.ADVANCEDCOMPUTERSCIENCECN6008_1.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
-
     <!-- Shape Styles -->
     <style name="ShapeAppearance.NutriAI.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">8dp</item>
     </style>
 
     <style name="ShapeAppearance.NutriAI.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerSize">@dimen/card_corner_radius</item>
+        <item name="cornerSize">12dp</item>
     </style>
 
     <style name="ShapeAppearance.NutriAI.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
@@ -37,43 +33,39 @@
 
     <!-- Typography Styles -->
     <style name="TextAppearance.NutriAI.Title" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="android:textSize">@dimen/text_title</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/primary_dark</item>
-    </style>
-
-    <style name="TextAppearance.NutriAI.Headline" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textSize">@dimen/text_headline</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <style name="TextAppearance.NutriAI.Subtitle" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="android:textSize">@dimen/text_subtitle</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/text_secondary</item>
     </style>
 
-    <style name="TextAppearance.NutriAI.Body" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textSize">@dimen/text_body</item>
-        <item name="android:textColor">@color/text_primary</item>
-    </style>
-
-    <!-- Custom Button Style -->
+    <!-- Custom Button Styles -->
     <style name="Widget.NutriAI.Button" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.NutriAI.Button</item>
         <item name="shapeAppearance">@style/ShapeAppearance.NutriAI.MediumComponent</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="android:paddingTop">@dimen/spacing_normal</item>
-        <item name="android:paddingBottom">@dimen/spacing_normal</item>
-        <item name="android:minHeight">@dimen/button_height</item>
-        <item name="android:textSize">@dimen/text_subtitle</item>
+        <item name="android:minHeight">64dp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
-    <!-- Custom Card Style -->
-    <style name="Widget.NutriAI.Card" parent="Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
-        <item name="cardElevation">@dimen/card_elevation</item>
-        <item name="android:layout_margin">@dimen/spacing_small</item>
+    <style name="Widget.NutriAI.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.NutriAI.MediumComponent</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minHeight">64dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="strokeColor">@color/primary_green</item>
+        <item name="android:textColor">@color/primary_green</item>
+    </style>
+
+    <style name="ThemeOverlay.NutriAI.Button" parent="">
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 
 </resources>

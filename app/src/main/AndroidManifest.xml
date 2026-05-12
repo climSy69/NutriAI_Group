@@ -19,7 +19,7 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.ADVANCEDCOMPUTERSCIENCECN6008_1.NoActionBar">
+            android:theme="@style/Base.Theme.ADVANCEDCOMPUTERSCIENCECN6008_1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

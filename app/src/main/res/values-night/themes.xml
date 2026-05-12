@@ -1,8 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/accent_light</item>
-        <item name="android:windowBackground">@color/background_dark</item>
-        <item name="android:textColorPrimary">@color/text_primary_dark</item>
-    </style>
-</resources>
