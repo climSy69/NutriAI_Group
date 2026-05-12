@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -79,11 +80,13 @@ public class SupabaseClient {
         @SerializedName("id") public String id;
         @SerializedName("full_name") public String fullName;
         @SerializedName("email") public String email;
+        @SerializedName("username") public String username;
 
-        public Profile(String id, String fullName, String email) {
+        public Profile(String id, String fullName, String email, String username) {
             this.id = id;
             this.fullName = fullName;
             this.email = email;
+            this.username = username;
         }
     }
 
@@ -125,6 +128,12 @@ public class SupabaseClient {
         Call<Void> createProfile(
             @Header("Authorization") String token,
             @Body Profile profile
+        );
+
+        @GET("rest/v1/profiles")
+        Call<List<Profile>> getProfile(
+            @Header("Authorization") String token,
+            @Query("id") String idFilter
         );
 
         @POST("rest/v1/meals")

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary_green</item>
         <item name="colorOnPrimary">@color/text_on_primary</item>
         <item name="colorPrimaryContainer">@color/primary_light</item>
@@ -20,46 +20,46 @@
     <style name="Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" parent="Base.Theme.ADVANCEDCOMPUTERSCIENCECN6008_1" />
 
     <!-- NoActionBar variant -->
-    <style name="Theme.ADVANCEDCOMPUTERSCIENCECN6008_1.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="Theme.ADVANCEDCOMPUTERSCIENCECN6008_1.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 
     <!-- Shape Styles -->
-    <style name="ShapeAppearance.NutriAI.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+    <style name="ShapeAppearance.NutriAI.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerSize">8dp</item>
     </style>
 
-    <style name="ShapeAppearance.NutriAI.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+    <style name="ShapeAppearance.NutriAI.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerSize">@dimen/card_corner_radius</item>
     </style>
 
-    <style name="ShapeAppearance.NutriAI.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+    <style name="ShapeAppearance.NutriAI.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <item name="cornerSize">24dp</item>
     </style>
 
     <!-- Typography Styles -->
-    <style name="TextAppearance.NutriAI.Title" parent="TextAppearance.Material3.HeadlineLarge">
+    <style name="TextAppearance.NutriAI.Title" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="android:textSize">@dimen/text_title</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/primary_dark</item>
     </style>
 
-    <style name="TextAppearance.NutriAI.Headline" parent="TextAppearance.Material3.HeadlineMedium">
+    <style name="TextAppearance.NutriAI.Headline" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textSize">@dimen/text_headline</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
-    <style name="TextAppearance.NutriAI.Subtitle" parent="TextAppearance.Material3.TitleMedium">
+    <style name="TextAppearance.NutriAI.Subtitle" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textSize">@dimen/text_subtitle</item>
         <item name="android:textColor">@color/text_secondary</item>
     </style>
 
-    <style name="TextAppearance.NutriAI.Body" parent="TextAppearance.Material3.BodyMedium">
+    <style name="TextAppearance.NutriAI.Body" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textSize">@dimen/text_body</item>
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <!-- Custom Button Style -->
-    <style name="Widget.NutriAI.Button" parent="Widget.Material3.Button">
+    <style name="Widget.NutriAI.Button" parent="Widget.MaterialComponents.Button">
         <item name="shapeAppearance">@style/ShapeAppearance.NutriAI.MediumComponent</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
@@ -70,7 +70,7 @@
     </style>
 
     <!-- Custom Card Style -->
-    <style name="Widget.NutriAI.Card" parent="Widget.Material3.CardView.Elevated">
+    <style name="Widget.NutriAI.Card" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">@dimen/card_corner_radius</item>
         <item name="cardElevation">@dimen/card_elevation</item>
         <item name="android:layout_margin">@dimen/spacing_small</item>

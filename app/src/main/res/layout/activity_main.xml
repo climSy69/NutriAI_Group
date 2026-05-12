@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_medium"
-        android:gravity="center_horizontal">
+        android:padding="24dp">
 
         <TextView
             android:id="@+id/tvAppTitle"
@@ -19,80 +18,70 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="NutriAI"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginBottom="@dimen/spacing_small" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             style="@style/TextAppearance.NutriAI.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dashboard"
-            android:layout_marginBottom="@dimen/spacing_xlarge" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp" />
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.NutriAI.Card"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_normal">
+            android:background="@drawable/rounded_card_bg"
+            android:orientation="vertical"
+            android:padding="12dp">
 
             <Button
                 android:id="@+id/btnAddMeal"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="56dp"
                 android:text="Add Meal"
-                android:textSize="@dimen/text_subtitle"
-                app:icon="@android:drawable/ic_menu_add" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.NutriAI.Card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_normal">
+                app:icon="@android:drawable/ic_menu_add"
+                android:layout_marginBottom="8dp" />
 
             <Button
                 android:id="@+id/btnWeekDiet"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="56dp"
                 android:text="Week Diet"
-                android:textSize="@dimen/text_subtitle"
-                app:icon="@android:drawable/ic_menu_today" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            style="@style/Widget.NutriAI.Card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_large">
+                app:icon="@android:drawable/ic_menu_today"
+                android:layout_marginBottom="8dp" />
 
             <Button
                 android:id="@+id/btnViewSummary"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="56dp"
                 android:text="Daily Summary"
-                android:textSize="@dimen/text_subtitle"
-                app:icon="@android:drawable/ic_menu_info_details" />
-        </com.google.android.material.card.MaterialCardView>
+                app:icon="@android:drawable/ic_menu_info_details"
+                android:layout_marginBottom="8dp" />
 
-        <Button
-            android:id="@+id/btnProfile"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View Profile"
-            android:layout_marginBottom="@dimen/spacing_normal" />
+            <Button
+                android:id="@+id/btnProfile"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="View Profile"
+                app:icon="@android:drawable/ic_menu_myplaces" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnLogout"
-            style="@style/Widget.Material3.Button.ElevatedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
             android:text="Logout"
             android:textColor="@color/error_red"
-            app:rippleColor="#20FF0000" />
+            android:layout_marginTop="24dp" />
 
     </LinearLayout>
 </ScrollView>
