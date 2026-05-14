@@ -210,7 +210,6 @@ This group version includes major UI upgrades:
 - ✔ Profile creation
 - ✔ Meal logging
 - ✔ Daily summary calculations
-- ✔ AI assistant responses
 - ✔ Session persistence
 - ✔ UI responsiveness
 
@@ -239,7 +238,6 @@ This version was developed collaboratively by:
 ### Contributions include:
 - Backend fixes & Supabase integration
 - UI/UX improvements
-- AI assistant integration
 - Debugging and testing
 
 ---
